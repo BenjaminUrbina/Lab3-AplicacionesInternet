@@ -1,0 +1,76 @@
+/* Contenedor principal */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* altura total */
+  background-color: #f3f4f6; /* gris claro */
+}
+
+/* Tarjeta central */
+.auth-card {
+  background: white;
+  border-radius: 1rem; /* equivalente a rounded-2xl */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 24rem; /* equivalente a w-96 */
+  padding: 1.5rem; /* p-6 */
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb; /* gris */
+}
+
+.auth-tab {
+  padding-bottom: 0.5rem;
+  color: #6b7280; /* gris */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-tab.active {
+  border-bottom: 2px solid #f97316; /* naranja */
+  color: #f97316;
+}
+
+/* Social login */
+.auth-social {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.auth-social-text {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.auth-social-btn {
+  background: #f3f4f6;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-social-btn:hover {
+  background: #e5e7eb;
+}
+.butonOK {
+  background-color: #f97316;
+  border: 0;
+}
+.butonOK:hover {
+  background-color: #f66802;
+}
