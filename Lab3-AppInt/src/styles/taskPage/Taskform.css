@@ -1,0 +1,53 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.task-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffb88c; 
+}
+
+.task-form input,
+.task-form textarea,
+.task-form select {
+  padding: 12px 14px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #2c2c2c;
+  color: #fff;
+}
+.task-form input:focus,
+.task-form textarea:focus,
+.task-form select:focus {
+  border-color: #ff6b00;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,107,0,0.3);
+}
+
+/* Fila de selects */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.guardarBtn {
+  margin-top: 10px;
+  background: #ff6b00;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 15px;
+}
+.guardarBtn:hover { background: #e65c00; }
