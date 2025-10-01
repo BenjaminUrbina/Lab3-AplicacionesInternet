@@ -1,5 +1,6 @@
 type Props = {};
 import "../../styles/loginPage/login.css";
+
 export default function Login({}: Props) {
   return (
     <form className="formX d-flex">
