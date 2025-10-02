@@ -1,21 +1,32 @@
 import "../../styles/loginPage/register.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabaseClient } from "../../backend/supabaseClient";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    
     try {
-      await supabaseClient.auth.signUp({
+      const { error } = await supabaseClient.auth.signUp({
         email,
         password,
       });
+      
+      if (error) throw error;
+      
       console.log("Usuario registrado exitosamente");
-    } catch (error) {
+      // Redirigir al dashboard después del registro
+      navigate("/dashboard");
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Error al registrar usuario");
     }
   };
   return (
@@ -31,8 +42,10 @@ export default function Register() {
         type="password"
         placeholder="Password"
         className="border rounded p-2 mb-3"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {error && <p style={{ color: "red", fontSize: "0.875rem" }}>{error}</p>}
       <button type="submit" className="butonOK text-white py-2 mb-3 rounded">
         Registrarse
       </button>

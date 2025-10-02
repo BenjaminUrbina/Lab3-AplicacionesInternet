@@ -1,18 +1,37 @@
-import { Home, LoginPage } from "./pages/index";
+import { Home, LoginPage, Error404, Dashboard } from "./pages/index";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Login, Register } from "./components/index";
+import { AuthProvider } from "./context/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="PageAuthenticate" element={<LoginPage />}>
-        <Route index element={<Navigate to="login" replace />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        
+        {/* Rutas públicas de autenticación */}
+        <Route path="PageAuthenticate" element={<LoginPage />}>
+          <Route index element={<Navigate to="login" replace />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ruta 404 */}
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
