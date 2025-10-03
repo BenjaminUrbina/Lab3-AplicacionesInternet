@@ -1,61 +1,63 @@
-import { useState } from "react";
-import Modal from "../../components/modal/Modal";
-import TaskForm from "../../components/taskform/Taskform";
+import { useMemo, useState } from "react";
+import Modal from "../../components/TaskComponents/Modal";
+import TaskForm from "../../components/TaskComponents/Taskform";
+import Filters from "../../components/TaskComponents/Filters";
+import TaskList from "../../components/TaskComponents/TaskList";
+import TaskContent from "../../components/TaskComponents/TaskContent";
 import "../../styles/taskPage/Taskpage.css";
 
 type Task = {
   id: number;
   title: string;
+  description: string;
   priority: string;
   state: string;
+  datelimit: string;
 };
 
 export default function TaskPage() {
-  //Modal
+  // Modal
   const [isOpen, setIsOpen] = useState(false);
 
-  //Filtros
+  // Filtros
   const [activePriority, setActivePriority] = useState<string | null>(null);
   const [activeStatus, setActiveStatus] = useState<string | null>(null);
 
-  //Variable para identificar la tarea selecionada
+  // Tarea seleccionada
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
 
-  //SIMULACION DE TAREAS DESDE SUPABASE(POR MIENTRAS)
+  // Datos simulados 
   const [tasks] = useState<Task[]>([
-    { id: 1, title: "Preparar informe semanal", priority: "alta", state: "pendientes" },
-    { id: 2, title: "Revisar diseño UI", priority: "baja", state: "curso" },
-    { id: 3, title: "Actualizar documentación", priority: "alta", state: "hechas" },
-    { id: 4, title: "Reunión con el equipo", priority: "alta", state: "hechas" },
-    { id: 5, title: "Corregir bugs críticos", priority: "media", state: "hechas" },
-    { id: 6, title: "Planificación sprint próximo", priority: "media", state: "curso" },
-    { id: 7, title: "Revisar PR de frontend", priority: "media", state: "pendientes" },
-    { id: 8, title: "Optimizar queries SQL", priority: "media", state: "curso" },
-    { id: 9, title: "Pruebas de integración", priority: "baja", state: "pendientes" },
-    { id: 10, title: "Demo para cliente", priority: "baja", state: "curso" },
-    { id: 11, title: "Diseñar dashboard", priority: "alta", state: "curso" },
-    { id: 12, title: "Configurar CI/CD", priority: "alta", state: "pendientes" },
-    { id: 13, title: "Subir a radiant", priority: "alta", state: "hechas" },
-    { id: 14, title: "Perder todas las rankeds", priority: "baja", state: "hechas"},
-    { id: 15, title: "Borrarlo a la...", priority: "alta", state: "pendientes"},
-    { id: 16, title: "Pilas Pilas", priority: "alta", state: "pendientes"},
+    { id: 1, title: "Preparar informe semanal", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "25/10/2025" },
+    { id: 2, title: "Revisar diseño UI", description: "Hola Muy chao", priority: "baja", state: "curso", datelimit: "25/10/2025" },
+    { id: 3, title: "Actualizar documentación", description: "Hola Muy buenas", priority: "alta", state: "hechas", datelimit: "02/10/2025" },
+    { id: 4, title: "Reunión con el equipo", description: "Hola Muy lol", priority: "alta", state: "hechas", datelimit: "12/10/2025" },
+    { id: 5, title: "Corregir bugs críticos", description: "Hola Muy buenas", priority: "media", state: "hechas", datelimit: "25/10/2025" },
+    { id: 6, title: "Planificación sprint próximo", description: "Hola Muy xxd", priority: "media", state: "curso", datelimit: "25/10/2025" },
+    { id: 7, title: "Revisar PR de frontend", description: "Hola Muy buenas", priority: "media", state: "pendientes", datelimit: "23/10/2025" },
+    { id: 8, title: "Optimizar queries SQL", description: "Hola Muy listochao", priority: "media", state: "curso", datelimit: "23/10/2025" },
+    { id: 9, title: "Pruebas de integración", description: "Hola Muy buenas", priority: "baja", state: "pendientes", datelimit: "12/10/2025" },
+    { id: 10, title: "Demo para cliente", description: "Hola Muy hola", priority: "baja", state: "curso", datelimit: "11/10/2025" },
+    { id: 11, title: "Diseñar dashboard", description: "Hola Muy buenas", priority: "alta", state: "curso", datelimit: "11/10/2025" },
+    { id: 12, title: "Configurar CI/CD", description: "Hola Muy chaoooooo", priority: "alta", state: "pendientes", datelimit: "25/10/2025" },
+    { id: 13, title: "Subir a radiant", description: "Hola Muy buenas", priority: "alta", state: "hechas", datelimit: "03/10/2025" },
+    { id: 14, title: "Perder todas las rankeds", description: "Hola Muy zapatitoroto", priority: "baja", state: "hechas", datelimit: "01/10/2025" },
+    { id: 15, title: "Borrarlo a la...", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "02/11/2025" },
+    { id: 16, title: "Pilas Pilas", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "22/10/2025" },
   ]);
 
-  //FUNCION PARA FILTRAR
-  const filteredTasks = tasks.filter((task) => {
-    let pass = true;
-
-    // Si hay un filtro de prioridad activo, lo aplicamos
-    if (activePriority && task.priority !== activePriority) {
-      pass = false;
-    }
-
-    // Si hay un filtro de estado activo, lo aplicamos
-    if (activeStatus && task.state !== activeStatus) {
-      pass = false;
-    }
-    return pass;
+  // Filtrado simple
+  const filteredTasks = tasks.filter((t) => {
+    if (activePriority && t.priority !== activePriority) return false;
+    if (activeStatus && t.state !== activeStatus) return false;
+    return true;
   });
+
+  // Tarea seleccionada
+  const selectedTask = useMemo(
+    () => tasks.find((t) => t.id === selectedTaskId) ?? null,
+    [tasks, selectedTaskId]
+  );
 
   const handleSave = () => {
     alert("Tarea creada");
@@ -64,96 +66,22 @@ export default function TaskPage() {
 
   return (
     <div className="taskpage">
-      {/*-----------------------COLUMNA IZQUIERDA-----------------------*/}
-      <aside className="tp-sidebar">
-        <h2 className="tp-sidebar-title">Filtros</h2>
+      <Filters
+        activePriority={activePriority}
+        setActivePriority={setActivePriority}
+        activeStatus={activeStatus}
+        setActiveStatus={setActiveStatus}
+      />
 
-        <div className="tp-filters">
-          <span className="tp-filters-title">Prioridad</span>
-          <button
-            className={`tp-filter tp-high ${activePriority === "alta" ? "active" : ""}`}
-            onClick={() => setActivePriority("alta")}
-          >
-            Alta prioridad
-          </button>
-          <button
-            className={`tp-filter tp-medium ${activePriority === "media" ? "active" : ""}`}
-            onClick={() => setActivePriority("media")}
-          >
-            Media prioridad
-          </button>
-          <button
-            className={`tp-filter tp-low ${activePriority === "baja" ? "active" : ""}`}
-            onClick={() => setActivePriority("baja")}
-          >
-            Baja prioridad
-          </button>
-        </div>
+      <TaskList
+        tasks={filteredTasks}
+        selectedTaskId={selectedTaskId}
+        onSelect={setSelectedTaskId}
+        onOpenNew={() => setIsOpen(true)}
+      />
 
-        <div className="tp-filters">
-          <span className="tp-filters-title">Estado</span>
-          <button
-            className={`tp-filter tp-done ${activeStatus === "hechas" ? "active" : ""}`}
-            onClick={() => setActiveStatus("hechas")}
-          >
-            Tareas Hechas
-          </button>
-          <button
-            className={`tp-filter tp-progress ${activeStatus === "curso" ? "active" : ""}`}
-            onClick={() => setActiveStatus("curso")}
-          >
-            En curso
-          </button>
-          <button
-            className={`tp-filter tp-pending ${activeStatus === "pendientes" ? "active" : ""}`}
-            onClick={() => setActiveStatus("pendientes")}
-          >
-            No empezadas
-          </button>
-        </div>
+      <TaskContent task={selectedTask} />
 
-        <div className="tp-filter-actions">
-          {/*Desactivar Filtros*/}
-          <button className="tp-btn-reset" onClick={() => { 
-            setActivePriority(null); 
-            setActiveStatus(null); 
-          }}>
-            Restablecer filtros
-          </button>
-        </div>
-      </aside>
-
-      {/*-----------------------COLUMNA CENTRAL(LISTA TAREAS)-----------------------*/}
-      <aside className="tp-tasklist">
-        <button className="tp-add-btn" onClick={() => setIsOpen(true)}>
-          + Nueva Tarea
-        </button>
-        
-          {/* LISTA DE TAREAS*/}
-          <div className="tp-tasks">
-            {filteredTasks.map((task) => (
-            <div
-                  key={task.id}
-                  className={`tp-task-item 
-                    ${selectedTaskId === task.id ? "active" : ""} 
-                    tp-${task.state}`}
-                  onClick={() => setSelectedTaskId(task.id)}
-                >
-                  {task.title}
-                </div>
-            ))}
-          </div>
-      </aside>
-
-      {/*-----------------------COLUMNA DERECHA-----------------------*/}
-      <main className="tp-main">
-        <div className="tp-main-empty">
-          <h3>Selecciona una tarea</h3>
-          <p className="tp-muted">Aquí se mostrará el contenido.</p>
-        </div>
-      </main>
-
-      {/* Modal para crear tarea */}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Crear Tarea">
         <TaskForm onSubmit={handleSave} />
       </Modal>
