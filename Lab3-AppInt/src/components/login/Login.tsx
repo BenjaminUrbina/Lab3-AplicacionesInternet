@@ -53,9 +53,6 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <a href="#" className="fs-6 mb-2">
-        ¿Has olvidado tu contraseña?
-      </a>
       {error && <p style={{ color: "red", fontSize: "0.875rem" }}>{error}</p>}
       <button type="submit" className="butonOK text-white py-2 rounded">
         Iniciar sesión
