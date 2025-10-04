@@ -1,4 +1,4 @@
-import { Home, LoginPage, Error404, Dashboard } from "./pages/index";
+import { Home, LoginPage, Error404, Task } from "./pages/index";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Login, Register } from "./components/index";
 import { AuthProvider } from "./context/AuthContext";
@@ -21,11 +21,11 @@ function App() {
 
         {/* Rutas protegidas */}
         <Route
-          path="/dashboard"
+          path="/TaskPage"
           element={
             <ProtectedRoute>
               <TaskContextProvider>
-                <Dashboard />
+                <Task />
               </TaskContextProvider>
             </ProtectedRoute>
           }
@@ -34,6 +34,7 @@ function App() {
         <Route path="*" element={<Error404 />} />
       </Routes>
     </AuthProvider>
+
   );
 }
 

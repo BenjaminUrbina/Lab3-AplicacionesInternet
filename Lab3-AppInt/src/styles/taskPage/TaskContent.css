@@ -1,0 +1,188 @@
+/*--------------------------COLUMNA DE TAREAS CONTENIDO--------------------------*/
+
+
+.tp-main {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: clamp(32px, 5vw, 64px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  color: #fff;
+  min-height: calc(100vh - 32px);
+  display: flex;
+  align-items: stretch;          
+  justify-content: center;
+}
+
+.tp-main-empty { 
+  text-align: center; 
+}
+.tp-main-empty h3 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.tp-main-empty p { 
+  margin: 0; 
+  color: #9ca3af; 
+  font-size: 13px; 
+}
+
+/* Contenedor interno */
+.tp-detail {
+  width: 100%;                  
+  height: 100%;                 
+  background: #191919;
+  border: 2px solid #ff6b00;  
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+  overflow: auto;                
+}
+
+/* Titulo */
+.tp-detail-title {
+  margin: 20px 0 40px 0;
+  font-size: 65px;         
+  font-weight: 900;        
+  letter-spacing: .5px;
+  color: #ff6b00;
+  text-align: center;      
+}
+
+/* Descripcion*/
+.tp-desc-box {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 40px;
+  min-height: 300px;
+}
+.tp-desc-box p {
+  margin: 0;
+  color: #e5e7eb;
+  line-height: 1.55;
+  font-size: 18px;
+}
+
+.tp-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 12px; 
+}
+
+.tp-meta-block {
+  background: transparent;
+  border: 0; 
+  padding: 0 12px;  
+}
+.tp-meta-block + .tp-meta-block {
+  border-left: 1px solid #2a2a2a;
+}
+
+.tp-field-label {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: #ffb88c;
+  margin-bottom: 10px;
+}
+
+/* Pills */
+.tp-segment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tp-pill {
+  appearance: none;
+  border: 1px solid #3a3a3a;
+  background: #232323;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 999px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: default;
+  transition: background .2s, border-color .2s, color .2s, transform .1s;
+}
+
+/* Estado activo */
+.tp-pill-state.is-active.tp-pending  { background: #3f2222; border-color: #ef4444; color: #fee2e2; }
+.tp-pill-state.is-active.tp-progress { background: #3f381f; border-color: #eab308; color: #fef3c7; }
+.tp-pill-state.is-active.tp-done     { background: #1f3f2a; border-color: #22c55e; color: #d1fae5; }
+
+/* Prioridad activa */
+.tp-pill-priority.is-active.tp-high   { background: #3b2417; border-color: #ff6b00; color: #ffd7bf; }
+.tp-pill-priority.is-active.tp-medium { background: #3a2c25; border-color: #ffb88c; color: #ffe7db; }
+.tp-pill-priority.is-active.tp-low    { background: #2e2e2e; border-color: #777;    color: #e5e7eb; }
+
+/* Botones */
+.tp-actions {
+  margin-top: 40px;
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 12px;
+}
+.tp-actions-inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.tp-btn {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .08s, filter .15s, background .2s, border-color .2s;
+}
+
+/* Variantes botones */
+.tp-btn-delete {
+  background: #281717;
+  border-color: #ef4444;
+  color: #fee2e2;
+}
+.tp-btn-delete:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.tp-btn-edit {
+  background: #2a2412;
+  border-color: #eab308;
+  color: #fef3c7;
+}
+.tp-btn-edit:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.tp-btn-save {
+  background: #17291f;
+  border-color: #22c55e;
+  color: #d1fae5;
+}
+.tp-btn-save:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+
+@media (max-width: 900px) {
+  .tp-actions-inner { justify-content: center; }
+  .tp-meta-grid { grid-template-columns: 1fr; padding: 10px; }
+  .tp-meta-block + .tp-meta-block {
+    border-left: 0;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .tp-main {
+    min-height: auto;
+    margin-top: 8px;
+  }
+}

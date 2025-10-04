@@ -12,7 +12,7 @@ export default function Login() {
   const { user } = useAuth();
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/TaskPage" replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export default function Login() {
       if (error) throw error;
 
       console.log("Inicio de sesión exitoso");
-      navigate("/dashboard");
+      navigate("/TaskPage");
     } catch (error: any) {
       console.error(error);
       setError(error.message || "Error al iniciar sesión");
