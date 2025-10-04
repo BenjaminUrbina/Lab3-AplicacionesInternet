@@ -12,9 +12,13 @@ type Task = {
 
 type Props = {
   task: Task | null;
+  onDelete?: () => void;
+  onEdit?: () => void;     
 };
 
-const TaskContent: React.FC<Props> = ({ task }) => {
+
+
+const TaskContent: React.FC<Props> = ({ task,onDelete,onEdit}) => {
   if (!task) {
     return (
       <main className="tp-main">
@@ -117,14 +121,20 @@ const TaskContent: React.FC<Props> = ({ task }) => {
         {/* Acciones */}
         <div className="tp-actions">
           <div className="tp-actions-inner">
-            <button className="tp-btn tp-btn-delete" type="button">
+            <button
+              className="tp-btn tp-btn-delete"
+              type="button"
+              onClick={onDelete} 
+              disabled={!onDelete} 
+            >
               Eliminar
             </button>
-            <button className="tp-btn tp-btn-edit" type="button">
+            <button
+              className="tp-btn tp-btn-edit"
+              type="button"
+              onClick={onEdit}   
+            >
               Editar
-            </button>
-            <button className="tp-btn tp-btn-save" type="button">
-              Guardar
             </button>
           </div>
         </div>

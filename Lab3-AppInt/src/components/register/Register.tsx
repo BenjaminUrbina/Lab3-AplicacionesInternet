@@ -12,7 +12,7 @@ export default function Register() {
   const { user } = useAuth();
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/TaskPage" replace />;
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Register() {
 
       console.log("Usuario registrado exitosamente");
       // Redirigir al dashboard después del registro
-      navigate("/dashboard");
+      navigate("/TaskPage");
     } catch (error: any) {
       console.error(error);
       setError(error.message || "Error al registrar usuario");

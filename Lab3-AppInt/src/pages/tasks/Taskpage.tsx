@@ -1,10 +1,13 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "../../components/TaskComponents/Modal";
 import TaskForm from "../../components/TaskComponents/Taskform";
 import Filters from "../../components/TaskComponents/Filters";
 import TaskList from "../../components/TaskComponents/TaskList";
 import TaskContent from "../../components/TaskComponents/TaskContent";
 import "../../styles/taskPage/Taskpage.css";
+import { useTask} from "../../context/TaskContext";
+import { useAuth } from "../../context/AuthContext";
+import type { Tarea } from "../../context/TaskContext";
 
 type Task = {
   id: number;
@@ -25,29 +28,67 @@ export default function TaskPage() {
 
   // Tarea seleccionada
   const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  
+  //Eliminacion tarea
+  const { deleteTask } = useTask();    
 
-  // Datos simulados 
-  const [tasks] = useState<Task[]>([
-    { id: 1, title: "Preparar informe semanal", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "25/10/2025" },
-    { id: 2, title: "Revisar diseño UI", description: "Hola Muy chao", priority: "baja", state: "curso", datelimit: "25/10/2025" },
-    { id: 3, title: "Actualizar documentación", description: "Hola Muy buenas", priority: "alta", state: "hechas", datelimit: "02/10/2025" },
-    { id: 4, title: "Reunión con el equipo", description: "Hola Muy lol", priority: "alta", state: "hechas", datelimit: "12/10/2025" },
-    { id: 5, title: "Corregir bugs críticos", description: "Hola Muy buenas", priority: "media", state: "hechas", datelimit: "25/10/2025" },
-    { id: 6, title: "Planificación sprint próximo", description: "Hola Muy xxd", priority: "media", state: "curso", datelimit: "25/10/2025" },
-    { id: 7, title: "Revisar PR de frontend", description: "Hola Muy buenas", priority: "media", state: "pendientes", datelimit: "23/10/2025" },
-    { id: 8, title: "Optimizar queries SQL", description: "Hola Muy listochao", priority: "media", state: "curso", datelimit: "23/10/2025" },
-    { id: 9, title: "Pruebas de integración", description: "Hola Muy buenas", priority: "baja", state: "pendientes", datelimit: "12/10/2025" },
-    { id: 10, title: "Demo para cliente", description: "Hola Muy hola", priority: "baja", state: "curso", datelimit: "11/10/2025" },
-    { id: 11, title: "Diseñar dashboard", description: "Hola Muy buenas", priority: "alta", state: "curso", datelimit: "11/10/2025" },
-    { id: 12, title: "Configurar CI/CD", description: "Hola Muy chaoooooo", priority: "alta", state: "pendientes", datelimit: "25/10/2025" },
-    { id: 13, title: "Subir a radiant", description: "Hola Muy buenas", priority: "alta", state: "hechas", datelimit: "03/10/2025" },
-    { id: 14, title: "Perder todas las rankeds", description: "Hola Muy zapatitoroto", priority: "baja", state: "hechas", datelimit: "01/10/2025" },
-    { id: 15, title: "Borrarlo a la...", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "02/11/2025" },
-    { id: 16, title: "Pilas Pilas", description: "Hola Muy buenas", priority: "alta", state: "pendientes", datelimit: "22/10/2025" },
-  ]);
+  //EditarTarea
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingTask, setEditingTask] = useState<Tarea | null>(null); 
+
+  //Autenticacion y extraer tareas
+  const { tareas, refresh } = useTask();
+  const { user, loading } = useAuth();
+
+  //Cargar o limpiar tareas una vez que se reviso la sesion
+  useEffect(() => {
+    if (!loading && user) {
+      console.log("Usuario listo, cargando tareas");
+      refresh();
+    } else if (!loading && !user) {
+      console.log("No hay usuario, limpiando tareas");
+    }
+  }, [loading, user, refresh]);
+
+  //Funcion para detectar tarea selecionada
+  const handleOpenEdit = () => {
+    if (!selectedTaskId) return;
+    const original = tareas.find((t) => t.id === selectedTaskId) ?? null;
+    if (!original) return;
+    setIsEditing(true);
+    setEditingTask(original);  
+    setIsOpen(true);
+  };
+
+  //Task para usar nombres consistentes y casos vacios
+  const uiTasks: Task[] = useMemo(() => {
+    return (tareas ?? []).map((t: Tarea) => ({
+      id: t.id,                            
+      title: t.titulo ?? "Sin título",      
+      description: t.descripcion ?? "",      
+      priority: t.prioridad ?? "media",      
+      state: t.estado ?? "pendiente",        
+      datelimit: t.date ?? "Sin fecha",      
+    }));
+  }, [tareas]);
+
+  //Funcion eliminar
+  const handleDelete = async () => {
+    
+    if (!selectedTaskId) return; 
+
+    try {
+      await deleteTask(selectedTaskId);   // elimnar en bd y local
+      setSelectedTaskId(null);            // limpiar vista
+    } catch (error: any) {
+      console.error("Error al eliminar tarea:", error);
+      alert(error.message || "Error al eliminar tarea");
+    }
+  };
+
 
   // Filtrado simple
-  const filteredTasks = tasks.filter((t) => {
+  const filteredTasks = uiTasks.filter((t) => {
     if (activePriority && t.priority !== activePriority) return false;
     if (activeStatus && t.state !== activeStatus) return false;
     return true;
@@ -55,14 +96,10 @@ export default function TaskPage() {
 
   // Tarea seleccionada
   const selectedTask = useMemo(
-    () => tasks.find((t) => t.id === selectedTaskId) ?? null,
-    [tasks, selectedTaskId]
+    () => uiTasks.find((t) => t.id === selectedTaskId) ?? null,
+    [uiTasks, selectedTaskId]
   );
 
-  const handleSave = () => {
-    alert("Tarea creada");
-    setIsOpen(false);
-  };
 
   return (
     <div className="taskpage">
@@ -77,14 +114,27 @@ export default function TaskPage() {
         tasks={filteredTasks}
         selectedTaskId={selectedTaskId}
         onSelect={setSelectedTaskId}
-        onOpenNew={() => setIsOpen(true)}
+        onOpenNew={() => {
+          setIsEditing(false);
+          setEditingTask(null);
+          setIsOpen(true);
+        }}
       />
 
-      <TaskContent task={selectedTask} />
+      <TaskContent task={selectedTask} onDelete={handleDelete} onEdit={handleOpenEdit} />  
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Crear Tarea">
-        <TaskForm onSubmit={handleSave} />
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title={isEditing ? "Editar Tarea" : "Crear Tarea"}
+      >
+        <TaskForm
+          mode={isEditing ? "edit" : "create"}
+          initial={editingTask ?? undefined}
+          onSubmit={() => setIsOpen(false)}
+        />
       </Modal>
+
     </div>
   );
 }
