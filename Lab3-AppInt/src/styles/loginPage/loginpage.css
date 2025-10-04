@@ -4,14 +4,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* altura total */
-  background-color: #f3f4f6; /* gris claro */
+  background: linear-gradient(135deg, #000000 0%, #4c4c4c 100%);
 }
 
 /* Tarjeta central */
 .auth-card {
-  background: white;
+  background-color: #f3f4f6; /* gris claro */
   border-radius: 1rem; /* equivalente a rounded-2xl */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1),
+    0 0 0 20px rgba(255, 255, 255, 0.05);
   width: 24rem; /* equivalente a w-96 */
   padding: 1.5rem; /* p-6 */
 }
