@@ -8,6 +8,7 @@ import "../../styles/taskPage/Taskpage.css";
 import { useTask } from "../../context/TaskContext";
 import { useAuth } from "../../context/AuthContext";
 import type { Tarea } from "../../context/TaskContext";
+import { Helmet } from "react-helmet";
 
 type Task = {
   id: number;
@@ -99,42 +100,52 @@ export default function TaskPage() {
   );
 
   return (
-    <div className="taskpage">
-      <Filters
-        activePriority={activePriority}
-        setActivePriority={setActivePriority}
-        activeStatus={activeStatus}
-        setActiveStatus={setActiveStatus}
-      />
-
-      <TaskList
-        tasks={filteredTasks}
-        selectedTaskId={selectedTaskId}
-        onSelect={setSelectedTaskId}
-        onOpenNew={() => {
-          setIsEditing(false);
-          setEditingTask(null);
-          setIsOpen(true);
-        }}
-      />
-
-      <TaskContent
-        task={selectedTask}
-        onDelete={handleDelete}
-        onEdit={handleOpenEdit}
-      />
-
-      <Modal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title={isEditing ? "Editar Tarea" : "Crear Tarea"}
-      >
-        <TaskForm
-          mode={isEditing ? "edit" : "create"}
-          initial={editingTask ?? undefined}
-          onSubmit={() => setIsOpen(false)}
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>TaskPage - NOTeolvides</title>
+        <meta
+          name="description"
+          content="Pagina donde podras encontrar y crear todas las tareas que necesiotes completar. Usando filtros podras encontrar y dar prioridad a ciertas tareas."
         />
-      </Modal>
-    </div>
+      </Helmet>
+      <div className="taskpage">
+        <Filters
+          activePriority={activePriority}
+          setActivePriority={setActivePriority}
+          activeStatus={activeStatus}
+          setActiveStatus={setActiveStatus}
+        />
+
+        <TaskList
+          tasks={filteredTasks}
+          selectedTaskId={selectedTaskId}
+          onSelect={setSelectedTaskId}
+          onOpenNew={() => {
+            setIsEditing(false);
+            setEditingTask(null);
+            setIsOpen(true);
+          }}
+        />
+
+        <TaskContent
+          task={selectedTask}
+          onDelete={handleDelete}
+          onEdit={handleOpenEdit}
+        />
+
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          title={isEditing ? "Editar Tarea" : "Crear Tarea"}
+        >
+          <TaskForm
+            mode={isEditing ? "edit" : "create"}
+            initial={editingTask ?? undefined}
+            onSubmit={() => setIsOpen(false)}
+          />
+        </Modal>
+      </div>
+    </>
   );
 }
