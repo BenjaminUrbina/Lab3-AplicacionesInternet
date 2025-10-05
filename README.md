@@ -30,8 +30,8 @@ npm run dev # Levanta el servidor
 ## ¿El proyecto cuenta con variables de entorno?
 
 El proyecto cuenta con 2 variables de entorno:
--VITE_SUPABASE_URL (url supabase)
--VITE_SUPABASE_ANON_KEY (token de supabase)
+- VITE_SUPABASE_URL (url supabase)
+- VITE_SUPABASE_ANON_KEY (token de supabase)
 Tendras que crear tu variable de entorno con el nombre .env.local, luego utilizaras las variables antes mencionadas.
 
 ## ¿Como el proyecto gestiona el backend?
