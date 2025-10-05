@@ -1,7 +1,7 @@
 /*--------------------------CONTENEDOR DEL DASHBOARD--------------------------*/
 .taskpage {
   display: grid;
-  grid-template-columns: 220px 280px 1fr; 
+  grid-template-columns: 220px 280px 1fr;
   gap: 16px;
   min-height: 100vh;
   background: #111;
@@ -17,6 +17,8 @@
 
 @media (max-width: 800px) {
   .taskpage {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
   }
 }

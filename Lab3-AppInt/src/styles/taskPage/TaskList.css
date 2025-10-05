@@ -4,7 +4,7 @@
   background: #1c1c1c;
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -23,7 +23,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background .2s, transform .1s;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .tp-add-btn:hover {
@@ -33,11 +33,11 @@
 
 /* Contenedor de la lista */
 .tp-tasks {
-  flex: 1;                 
+  flex: 1;
   background: #171717;
   border-radius: 8px;
   padding: 12px;
-  overflow-y: auto;        
+  overflow-y: auto;
   border: 1px dashed #333;
   max-height: 86vh;
 }
@@ -45,14 +45,17 @@
 /* Cada tarea */
 .tp-task-item {
   background: #232323;
-  border: 2px solid #333;  
+  border: 2px solid #333;
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 14px;
   margin-bottom: 10px;
   color: #fff;
   cursor: pointer;
-  transition: background .2s, transform .1s, border-color .2s;
+  transition: background 0.2s, transform 0.1s, border-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tp-task-item:hover {
@@ -61,9 +64,15 @@
 }
 
 /* Bordes dependiendo de estado */
-.tp-task-item.tp-hechas     { border-color: #22c55e; } /* verde */
-.tp-task-item.tp-curso      { border-color: #eab308; } /* amarillo */
-.tp-task-item.tp-pendientes { border-color: #ef4444; } /* rojo */
+.tp-task-item.tp-hechas {
+  border-color: #22c55e;
+} /* verde */
+.tp-task-item.tp-curso {
+  border-color: #eab308;
+} /* amarillo */
+.tp-task-item.tp-pendientes {
+  border-color: #ef4444;
+} /* rojo */
 
 /* Tarea seleccionada */
 .tp-task-item.active {
@@ -73,13 +82,15 @@
 }
 
 /* Texto oscuro*/
-.tp-muted { 
-  color: #9ca3af; 
-  font-size: 13px; 
+.tp-muted {
+  color: #9ca3af;
+  font-size: 13px;
 }
 
 /* Scroll*/
-.tp-tasks::-webkit-scrollbar { width: 8px; }
+.tp-tasks::-webkit-scrollbar {
+  width: 8px;
+}
 
 .tp-tasks::-webkit-scrollbar-track {
   background: #1a1a1a;
@@ -87,13 +98,13 @@
 }
 
 .tp-tasks::-webkit-scrollbar-thumb {
-  background-color: #ff6b00; 
+  background-color: #ff6b00;
   border-radius: 8px;
   border: 2px solid #1a1a1a;
 }
 
 .tp-tasks::-webkit-scrollbar-thumb:hover {
-  background-color: #e65c00; 
+  background-color: #e65c00;
 }
 
 @media (max-width: 800px) {

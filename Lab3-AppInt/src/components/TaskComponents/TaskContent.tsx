@@ -13,12 +13,10 @@ type Task = {
 type Props = {
   task: Task | null;
   onDelete?: () => void;
-  onEdit?: () => void;     
+  onEdit?: () => void;
 };
 
-
-
-const TaskContent: React.FC<Props> = ({ task,onDelete,onEdit}) => {
+const TaskContent: React.FC<Props> = ({ task, onDelete, onEdit }) => {
   if (!task) {
     return (
       <main className="tp-main">
@@ -34,7 +32,9 @@ const TaskContent: React.FC<Props> = ({ task,onDelete,onEdit}) => {
     <main className="tp-main">
       <article className="tp-detail">
         {/* Título */}
-        <h3 className="tp-detail-title">{task.title}</h3>
+        <div className="container-fluid">
+          <h2 className="tp-detail-title">{task.title}</h2>
+        </div>
 
         {/* Descripción */}
         <div className="tp-desc-box">
@@ -124,15 +124,15 @@ const TaskContent: React.FC<Props> = ({ task,onDelete,onEdit}) => {
             <button
               className="tp-btn tp-btn-delete"
               type="button"
-              onClick={onDelete} 
-              disabled={!onDelete} 
+              onClick={onDelete}
+              disabled={!onDelete}
             >
               Eliminar
             </button>
             <button
               className="tp-btn tp-btn-edit"
               type="button"
-              onClick={onEdit}   
+              onClick={onEdit}
             >
               Editar
             </button>
