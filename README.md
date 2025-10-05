@@ -18,7 +18,7 @@ El cual puedes encontrar en este [Link](https://nodejs.org/es).
 - [React route](https://reactrouter.com/)
 
 ## ¿Con que versión estamos trabajando?
-Actualmente estamos trabajando con `npm 11.6.0` y para el backkend  y base de datos utilizamos supabase.
+Actualmente estamos trabajando con `npm 11.6.0` y para el backend  y base de datos utilizamos supabase.
 Para poder desplegar el proyecto utilizamos vercel, utilizando este [Link](https://lab3-aplicaciones-internet.vercel.app/) podras acceder a la pagina.
 
 ## ¿Como ejecutar el proyecto en tu computadora?
@@ -32,6 +32,7 @@ npm run dev # Levanta el servidor
 El proyecto cuenta con 2 variables de entorno:
 - VITE_SUPABASE_URL (url supabase)
 - VITE_SUPABASE_ANON_KEY (token de supabase)
+  
 Tendras que crear tu variable de entorno con el nombre .env.local, luego utilizaras las variables antes mencionadas.
 
 ## ¿Como el proyecto gestiona el backend?
