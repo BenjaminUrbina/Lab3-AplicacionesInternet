@@ -1,13 +1,19 @@
 import "../../styles/loginPage/login.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { supabaseClient } from "../../backend/supabaseClient";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to="/TaskPage" replace />;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +28,7 @@ export default function Login() {
       if (error) throw error;
 
       console.log("Inicio de sesión exitoso");
-      navigate("/dashboard");
+      navigate("/TaskPage");
     } catch (error: any) {
       console.error(error);
       setError(error.message || "Error al iniciar sesión");
@@ -47,9 +53,6 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <a href="#" className="fs-6 mb-2">
-        ¿Has olvidado tu contraseña?
-      </a>
       {error && <p style={{ color: "red", fontSize: "0.875rem" }}>{error}</p>}
       <button type="submit" className="butonOK text-white py-2 rounded">
         Iniciar sesión

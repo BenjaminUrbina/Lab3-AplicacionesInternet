@@ -1,29 +1,34 @@
 import "../../styles/loginPage/register.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { supabaseClient } from "../../backend/supabaseClient";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
+  if (user) {
+    return <Navigate to="/TaskPage" replace />;
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    
+
     try {
       const { error } = await supabaseClient.auth.signUp({
         email,
         password,
       });
-      
+
       if (error) throw error;
-      
+
       console.log("Usuario registrado exitosamente");
       // Redirigir al dashboard después del registro
-      navigate("/dashboard");
+      navigate("/TaskPage");
     } catch (error: any) {
       console.error(error);
       setError(error.message || "Error al registrar usuario");

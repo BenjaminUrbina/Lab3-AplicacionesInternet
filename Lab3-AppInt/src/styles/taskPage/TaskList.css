@@ -1,0 +1,115 @@
+/*--------------------------COLUMNA DE TAREAS--------------------------*/
+
+.tp-tasklist {
+  background: #1c1c1c;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #fff;
+  min-height: calc(100vh - 32px);
+}
+
+/* Boton nueva tarea */
+.tp-add-btn {
+  width: 100%;
+  background: #ff6b00;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.tp-add-btn:hover {
+  background: #e65c00;
+  transform: translateY(-1px);
+}
+
+/* Contenedor de la lista */
+.tp-tasks {
+  flex: 1;
+  background: #171717;
+  border-radius: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  border: 1px dashed #333;
+  max-height: 86vh;
+}
+
+/* Cada tarea */
+.tp-task-item {
+  background: #232323;
+  border: 2px solid #333;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, border-color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tp-task-item:hover {
+  background: #2c2c2c;
+  transform: translateY(-1px);
+}
+
+/* Bordes dependiendo de estado */
+.tp-task-item.tp-hechas {
+  border-color: #22c55e;
+} /* verde */
+.tp-task-item.tp-curso {
+  border-color: #eab308;
+} /* amarillo */
+.tp-task-item.tp-pendientes {
+  border-color: #ef4444;
+} /* rojo */
+
+/* Tarea seleccionada */
+.tp-task-item.active {
+  background: #1a1a1a;
+  box-shadow: 0 0 8px rgba(255, 107, 0, 0.5);
+  transform: scale(1.02);
+}
+
+/* Texto oscuro*/
+.tp-muted {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+/* Scroll*/
+.tp-tasks::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tp-tasks::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 8px;
+}
+
+.tp-tasks::-webkit-scrollbar-thumb {
+  background-color: #ff6b00;
+  border-radius: 8px;
+  border: 2px solid #1a1a1a;
+}
+
+.tp-tasks::-webkit-scrollbar-thumb:hover {
+  background-color: #e65c00;
+}
+
+@media (max-width: 800px) {
+  .tp-tasklist {
+    min-height: auto;
+    margin-top: 8px;
+  }
+}
